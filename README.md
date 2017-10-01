@@ -31,6 +31,18 @@ The result has the following form:
 ## log(...arguments)
 Outputs the given arguments to the log. If you want to log objects other than strings and numbers, don't forget to convert them to strings first, e.g. by using [JSON.stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
 
+## skip()
+Skips the next bet.
+
+The result has the following form:
+```js
+{
+  id:         string, // bet ID
+  timestamp:  string, // RFC2822-compliant date string
+  multiplier: number  // bet outcome
+}
+```
+
 ## stop()
 Instructs the script editor to stop the script.
 
