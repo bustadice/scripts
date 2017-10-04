@@ -15,7 +15,10 @@ while (true) {
   const maxBet = Math.floor(Math.min(this.balance, maxProfit / 0.01))
   const betSize = Math.round((Math.random() * (maxBet - 100) + 100) / 100) * 100
 
-  const maxTarget = Math.floor((maxProfit / betSize + 1) * 100)
+  const maxTarget = Math.min(
+    Math.floor((maxProfit / betSize + 1) * 100),
+    100000000
+  )
   const target = Math.round(Math.random() * (maxTarget - 101) + 101) / 100
 
   this.log(`Betting ${betSize/100} bits at ${target.toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}x.`)
