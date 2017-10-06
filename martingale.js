@@ -12,6 +12,7 @@ while (true) {
 
   if (multiplier < target) { // loss
     betSize *= betMultiplier
+    betSize = Math.round(betSize / 100) * 100 // round bet to nearest valid one
     this.log(`Lost bet. Multiplying bet size by ${betMultiplier} for new bet size of ${betSize} satoshis.`)
   } else { // win
     betSize = baseBet
