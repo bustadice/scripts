@@ -52,3 +52,4 @@ Instructs the script editor to stop the script.
  - [Random](random.js), which bets random amounts with random target multipliers.
  - [Turbo](turbo.js), which makes a set number of bets as quickly as possible.
  - [Turbo Skip](turboskip.js), which skips a set number of bets as quickly as possible.
+ - [Labouchère](labouchere.js), which follows the [Labouchère system](https://en.wikipedia.org/wiki/Labouch%C3%A8re_system)
