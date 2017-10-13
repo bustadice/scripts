@@ -8,7 +8,7 @@
 
 const betSize = 100  // how many satoshis to bet
 const target = 2.00  // target multiplier
-const betCount = 100 // number of bets to make
+const betCount = 50  // number of bets to make
 
 
 for (let i = 0; i < betCount; i++) {

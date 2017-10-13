@@ -6,7 +6,7 @@
 // that!
 
 
-const betCount = 100 // number of bets to skip
+const betCount = 30 // number of bets to skip
 
 
 for (let i = 0; i < betCount; i++) {
