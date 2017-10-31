@@ -71,3 +71,4 @@ Instructs the script editor to stop the script.
  - [Martingale](martingale.js), which follows the [Martingale system](https://en.wikipedia.org/wiki/Martingale_(betting_system))
  - [Labouchère](labouchere.js), which follows the [Labouchère system](https://en.wikipedia.org/wiki/Labouch%C3%A8re_system)
  - [Random](random.js), which bets random amounts with random target multipliers.
+ - [Seed](seed.js), which requests a new seed pair and then sets a new client seed
