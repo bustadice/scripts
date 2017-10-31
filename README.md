@@ -31,6 +31,26 @@ The result has the following form:
 ## log(...arguments)
 Outputs the given arguments to the log. If you want to log objects other than strings and numbers, don't forget to convert them to strings first, e.g. by using [JSON.stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
 
+## newSeedPair(seed)
+Reveals the previous seed pair and generates a new one using the given client seed. If no client seed is provided, one is generated randomly.
+
+Calling `newSeedPair` will fail if the current seed pair is unused, i.e. if no bets have been made with it yet.
+
+The result has the following form:
+```js
+{
+  prev_server_seed: string, // previous server seed
+  prev_client_seed: string, // previous client seed
+
+  server_seed_hash: string  // hash of new server seed
+}
+```
+
+## setClientSeed(seed)
+Set the client seed. If no client seed is provided, one is generated randomly.
+
+Calling `setClientSeed` will fail if the current seed pair has already been used, i.e. if bets have been made with it.
+
 ## skip()
 Skips the next bet.
 
