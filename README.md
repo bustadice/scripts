@@ -28,6 +28,9 @@ The result has the following form:
 }
 ```
 
+## clearLog()
+Clears the log.
+
 ## log(...arguments)
 Outputs the given arguments to the log. If you want to log objects other than strings and numbers, don't forget to convert them to strings first, e.g. by using [JSON.stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
 
