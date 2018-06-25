@@ -72,6 +72,7 @@ Instructs the script editor to stop the script.
 
 # Examples
  - [Martingale](martingale.js), which follows the [Martingale system](https://en.wikipedia.org/wiki/Martingale_(betting_system))
+ - [Payout Martingale](payout-martingale.js), which is similar to Martingale but increases the target multiplier
  - [Labouchère](labouchere.js), which follows the [Labouchère system](https://en.wikipedia.org/wiki/Labouch%C3%A8re_system)
  - [Random](random.js), which bets random amounts with random target multipliers.
  - [Seed](seed.js), which requests a new seed pair and then sets a new client seed
