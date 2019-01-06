@@ -1,40 +1,42 @@
-const bet = 100                 // how many satoshis to bet
-const baseTarget = 2.00         // target multiplier
-const stop = 20                 // how big the target can get before stopping the script
+var config = {
+  bet: { label: "Bet", type: "balance", value: 100 },                 // how many satoshis to bet
+  baseTarget: { label: "Base target", type: "multiplier", value: 2 }, // target multiplier
+  stop: { label: "Stop", type: "multiplier", value: 20 },             // how big the target can get before stopping the script
 
-const resetTargetOnLoss = false // return to base target on loss?
-const lossIncrease = 1.00       // what to increase the target on loss. Ignored if resetTargetOnLoss is true
+  resetTargetOnLoss: { label: "Reset target on loss", type: "checkbox", value: false }, // return to base target on loss?
+  lossIncrease: { label: "Increase on loss", type: "multiplier", value: 1 },            // what to increase the target on loss. Ignored if resetTargetOnLoss is true
 
-const resetTargetOnWin = true   // return to base target on win?
-const winIncrease = 1.00        // what to increase the target on win. Ignored if resetTargetOnWin is true
+  resetTargetOnWin: { label: "Reset target on win", type: "checkbox", value: true }, // return to base target on win?
+  winIncrease: { label: "Increase on win", type: "multiplier", value: 1 }            // what to increase the target on win. Ignored if resetTargetOnWin is true
+}
 
 
-let currentTarget = baseTarget
-this.log(`Starting payout martingale with a base target of ${baseTarget}`)
+let currentTarget = config.baseTarget.value
+this.log(`Starting payout martingale with a base target of ${config.baseTarget.value}`)
 
 while (true) {
   // make the bet and wait for the result
-  const { multiplier } = await this.bet(bet, currentTarget)
+  const { multiplier } = await this.bet(config.bet.value, currentTarget)
 
   if (multiplier < currentTarget) { // loss
-    if (resetTargetOnLoss) {
-      currentTarget = baseTarget
+    if (config.resetTargetOnLoss.value) {
+      currentTarget = config.baseTarget.value
       this.log(`Lost bet, so resetting target to ${currentTarget}`)
     } else {
-      increaseTarget(lossIncrease)
+      increaseTarget(config.lossIncrease.value)
       this.log(`Lost bet, so increasing target to ${currentTarget}`)
     }
   } else { // win
-    if (resetTargetOnWin) {
-      currentTarget = baseTarget
+    if (config.resetTargetOnWin.value) {
+      currentTarget = config.baseTarget.value
       this.log(`Won bet, so resetting target to ${currentTarget}`)
     } else {
-      increaseTarget(winIncrease)
+      increaseTarget(config.winIncrease.value)
       this.log(`Won bet, so increasing target to ${currentTarget}`)
     }
   }
 
-  if (currentTarget > stop) {
+  if (currentTarget > config.stop.value) {
     this.log(`Target got to ${currentTarget}. Stopping the script`)
     this.stop()
   }

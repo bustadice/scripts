@@ -70,6 +70,95 @@ The result has the following form:
 Instructs the script editor to stop the script.
 
 
+# GUI Configuration
+bustadice supports optional GUI configuration of scripts, allowing the player to configure the script's parameters in a user-friendly manner.
+
+The GUI-configurable options are defined by creating a `config` variable on the first line of the script. `config` **must** be a `var` (not a `const` or `let`) and **must** be on the first line (not even preceded by comments). bustadice will parse the `config` variable into a form. When it runs the script will have access to the values provided in the form by the player.
+
+A minimal `config` object could look like this:
+
+```javascript
+var config = {
+  clientSeed: { label: "Client seed", type: "text", value: "new client seed" }
+};
+```
+
+We define a configuration variable called `clientSeed`, give it the label *Client seed* and the initial value *new client seed*. This is what the resulting UI looks like:
+
+![rendered sample configuration form](gui.png)
+
+In our script, we can then access the value the player chose:
+
+```javascript
+await this.log(config.clientSeed.value);
+```
+
+## Input types
+
+The example `config` object above only uses a single configuration variable of type `text`, but there are several types that we can use:
+
+### `balance`
+A field representing an amount given in bits. The input is automatically converted to satoshi before being supplied to the script.
+
+```javascript
+var config = {
+  baseBet: { label: "Base bet", type: "balance", value: 100 }
+};
+```
+
+### `checkbox`
+A checkbox that allows you to active a single option (or not). The value provided to the script will be `true` if the box is checked and `false` otherwise.
+
+```javascript
+var config = {
+  stopOnWin: { label: "Stop on win", type: "checkbox", value: true },
+};
+```
+
+### `multiplier`
+A multiplier. The value is parsed as a floating-point number before being provided to the script.
+
+```javascript
+var config = {
+  target: { label: "Target multiplier", type: "multiplier", value: 2.00 }
+};
+```
+
+### `noop`
+A label without a form input, useful as part of a radio field (see below) or as a header to a group of fields.
+
+```javascript
+var config = {
+  basicHeader: { label: "Basic Options", type: "noop" }
+};
+```
+
+### `radio`
+A group of fields that lets you choose exactly one of several options.
+
+```javascript
+var config = {
+  loss: {
+    label: "On loss", type: "radio", value: "increase", options: {
+      base: { label: "Return to base bet", type: "noop" },
+      increase: { label: "Increase bet by", type: "multiplier", value: 2 }
+    }
+  }
+};
+```
+
+`config.loss.value` will be a string and either `base` or `increase`. If `increase` was chosen, the multiplier's value is accessible at `config.loss.options.increase.value`.
+
+### `text`
+A simple text field that provides a string to the script.
+
+```javascript
+var config = {
+  clientSeed: { label: "Client seed", type: "text", value: "new client seed" }
+};
+```
+
+
 # Examples
  - [Martingale](martingale.js), which follows the [Martingale system](https://en.wikipedia.org/wiki/Martingale_(betting_system))
  - [Payout Martingale](payout-martingale.js), which is similar to Martingale but increases the target multiplier
