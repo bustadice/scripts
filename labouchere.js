@@ -13,13 +13,15 @@ var config = {
 }
 
 
-let list;
+let baseList;
 try {
-  list = JSON.parse(config.baseList.value)
+  baseList = JSON.parse(config.baseList.value)
 } catch (error ) {
   await this.log("received invalid base list")
   await this.stop()
 }
+
+let list = baseList
 this.log(`Starting Labouchere with base list ${list}.`);
 
 loop: for (;;) {
