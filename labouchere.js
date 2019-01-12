@@ -30,7 +30,7 @@ loop: for (;;) {
   switch(list.length) {
   case 0:
     // Finished a list. Loop?
-    if (loop) {
+    if (config.loop.value) {
       list = baseList;
       continue loop;
     } else {
