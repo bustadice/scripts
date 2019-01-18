@@ -160,6 +160,7 @@ var config = {
 
 
 # Examples
+ - [Flat Bet](flat-bet.js), which places the same bet repeatedly until the target multiplier is hit
  - [Martingale](martingale.js), which follows the [Martingale system](https://en.wikipedia.org/wiki/Martingale_(betting_system))
  - [Payout Martingale](payout-martingale.js), which is similar to Martingale but increases the target multiplier
  - [Labouchère](labouchere.js), which follows the [Labouchère system](https://en.wikipedia.org/wiki/Labouch%C3%A8re_system)
