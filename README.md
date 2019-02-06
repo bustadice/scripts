@@ -49,6 +49,9 @@ The result has the following form:
 }
 ```
 
+## resetStatistics()
+Resets the statistics shown beneath the multiplier.
+
 ## setClientSeed(seed)
 Set the client seed. If no client seed is provided, one is generated randomly.
 
