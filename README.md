@@ -136,6 +136,15 @@ var config = {
 };
 ```
 
+### `number`
+A generic number. The value is parsed as a floating-point number before being provided to the script.
+
+```javascript
+var config = {
+  target: { label: "Stop after wins", type: "number", value: 5 }
+};
+```
+
 ### `radio`
 A group of fields that lets you choose exactly one of several options.
 
