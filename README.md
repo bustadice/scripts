@@ -3,6 +3,7 @@ The following fields are provided on `this`:
  - `balance`: Your last known balance
  - `bankroll`: The last known bankroll
  - `maxProfit`: The profit limit in satoshis based on the last known bankroll
+ - `username`: The user name of the account running the script
 
 Currently these fields are only updated when you call `this.bet`.
 
