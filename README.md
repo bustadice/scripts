@@ -1,15 +1,16 @@
-# Script Editor API
+# bustadice's Script Editor API
 The following fields are provided on `this`:
  - `balance`: Your last known balance
  - `bankroll`: The last known bankroll
  - `maxProfit`: The profit limit in satoshis based on the last known bankroll
  - `username`: The user name of the account running the script
 
-Currently these fields are only updated when you call `this.bet`.
+These fields are only updated when you call `this.bet`.
 
+## API Methods
 All methods are provided on `this` and return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises). Because the script is wrapped in an [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), you may use the [await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await) operator to conveniently handle Promises.
 
-## bet(size, target)
+### bet(size, target)
 Places a bet and returns a Promise that resolves with the result.
 
 `size` is the amount to bet in satoshis. Only wager sizes that are divisible by 100 (whole bits) are valid.
@@ -29,13 +30,13 @@ The result has the following form:
 }
 ```
 
-## clearLog()
+### clearLog()
 Clears the log.
 
-## log(...arguments)
+### log(...arguments)
 Outputs the given arguments to the log. If you want to log objects other than strings and numbers, don't forget to convert them to strings first, e.g. by using [JSON.stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
 
-## newSeedPair(seed)
+### newSeedPair(seed)
 Reveals the previous seed pair and generates a new one using the given client seed. If no client seed is provided, one is generated randomly.
 
 Calling `newSeedPair` will fail if the current seed pair is unused, i.e. if no bets have been made with it yet.
@@ -50,15 +51,15 @@ The result has the following form:
 }
 ```
 
-## resetStatistics()
+### resetStatistics()
 Resets the statistics shown beneath the multiplier.
 
-## setClientSeed(seed)
+### setClientSeed(seed)
 Set the client seed. If no client seed is provided, one is generated randomly.
 
 Calling `setClientSeed` will fail if the current seed pair has already been used, i.e. if bets have been made with it.
 
-## skip()
+### skip()
 Skips the next bet.
 
 The result has the following form:
@@ -70,11 +71,29 @@ The result has the following form:
 }
 ```
 
-## stop()
+### stop()
 Instructs the script editor to stop the script.
 
 
-# GUI Configuration
+## Chat messages
+Scripts can react to chat messages in public channels by listening on this for the `PUBLIC_CHAT_MESSAGE` event:
+```js
+this.on("PUBLIC_CHAT_MESSAGE", payload => this.log(`${payload.sender} said ${payload.body} in the ${payload.channel} channel.`))
+```
+
+The payload passed to the callback function has the following form:
+```js
+{
+  id:        number, // message ID
+  timestamp: string, // RFC2822-compliant date string
+  channel:   string, // name of the chat channel in which the message was received
+  sender:    string, // user name of the message author
+  body:      string // contents of the message
+}
+```
+
+
+## GUI Configuration
 bustadice supports optional GUI configuration of scripts, allowing the player to configure the script's parameters in a user-friendly manner.
 
 The GUI-configurable options are defined by creating a `config` variable on the first line of the script. `config` **must** be a `var` (not a `const` or `let`) and **must** be on the first line (not even preceded by comments). bustadice will parse the `config` variable into a form. When it runs the script will have access to the values provided in the form by the player.
@@ -97,11 +116,11 @@ In our script, we can then access the value the player chose:
 await this.log(config.clientSeed.value);
 ```
 
-## Input types
+### Input types
 
 The example `config` object above only uses a single configuration variable of type `text`, but there are several types that we can use:
 
-### `balance`
+#### `balance`
 A field representing an amount given in bits. The input is automatically converted to satoshi before being supplied to the script.
 
 ```javascript
@@ -110,7 +129,7 @@ var config = {
 };
 ```
 
-### `checkbox`
+#### `checkbox`
 A checkbox that allows you to active a single option (or not). The value provided to the script will be `true` if the box is checked and `false` otherwise.
 
 ```javascript
@@ -119,7 +138,7 @@ var config = {
 };
 ```
 
-### `multiplier`
+#### `multiplier`
 A multiplier. The value is parsed as a floating-point number before being provided to the script.
 
 ```javascript
@@ -128,7 +147,7 @@ var config = {
 };
 ```
 
-### `noop`
+#### `noop`
 A label without a form input, useful as part of a radio field (see below) or as a header to a group of fields.
 
 ```javascript
@@ -137,7 +156,7 @@ var config = {
 };
 ```
 
-### `number`
+#### `number`
 A generic number. The value is parsed as a floating-point number before being provided to the script.
 
 ```javascript
@@ -146,7 +165,7 @@ var config = {
 };
 ```
 
-### `radio`
+#### `radio`
 A group of fields that lets you choose exactly one of several options.
 
 ```javascript
@@ -162,7 +181,7 @@ var config = {
 
 `config.loss.value` will be a string and either `base` or `increase`. If `increase` was chosen, the multiplier's value is accessible at `config.loss.options.increase.value`.
 
-### `text`
+#### `text`
 A simple text field that provides a string to the script.
 
 ```javascript
@@ -172,7 +191,7 @@ var config = {
 ```
 
 
-# Examples
+## Examples
  - [Flat Bet](flat-bet.js), which places the same bet repeatedly until the target multiplier is hit
  - [Martingale](martingale.js), which follows the [Martingale system](https://en.wikipedia.org/wiki/Martingale_(betting_system))
  - [Payout Martingale](payout-martingale.js), which is similar to Martingale but increases the target multiplier
