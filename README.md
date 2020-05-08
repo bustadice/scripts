@@ -74,6 +74,11 @@ The result has the following form:
 ### stop()
 Instructs the script editor to stop the script.
 
+### history
+Stores the last 1000 bets made by the script since it started running.
+
+Note: Bets are prepended to history, so `this.history[0]` is the previous bet
+that the script made and `this.history.slice(0, 10)` would return the previous 10 bets.
 
 ## Chat messages
 Scripts can react to chat messages in public channels by listening on this for the `PUBLIC_CHAT_MESSAGE` event:
