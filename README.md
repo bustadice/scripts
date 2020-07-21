@@ -36,6 +36,19 @@ Clears the log.
 ### log(...arguments)
 Outputs the given arguments to the log. If you want to log objects other than strings and numbers, don't forget to convert them to strings first, e.g. by using [JSON.stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
 
+### notify(message)
+If you want to emit browser notifications from the script,
+use `notify(message)`. This is good for sending yourself messages
+about notable events (like if the script is stopping itself) when
+you are viewing another browser tab or application.
+
+Note that you must have browser notifications enabled for bustadice.com.
+
+You may not always want a script to bother you with browser notifications.
+You can toggle this behavior in the [notification settings](https://bustadice.com/play/notifications).
+When script notifications are disabled, `notify()` messages will simply
+appear in the script logs.
+
 ### newSeedPair(seed)
 Reveals the previous seed pair and generates a new one using the given client seed. If no client seed is provided, one is generated randomly.
 
