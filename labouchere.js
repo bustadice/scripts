@@ -21,7 +21,7 @@ try {
   await this.stop()
 }
 
-let list = baseList
+let list = baseList.slice();
 this.log(`Starting Labouchere with base list ${list}.`);
 
 loop: for (;;) {
