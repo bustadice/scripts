@@ -26,7 +26,8 @@ The result has the following form:
   target:     number, // target multiplier (same as target argument)
   multiplier: number, // bet outcome
   bankroll:   number, // bankroll in satoshis after the bet
-  balance:    number  // user balance in satoshis after the bet
+  balance:    number, // user balance in satoshis after the bet
+  nonce:      number  // the bet's nonce
 }
 ```
 
