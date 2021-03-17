@@ -22,31 +22,11 @@ try {
 }
 
 let list = baseList.slice();
-this.log(`Starting Labouchere with base list ${list}.`);
+this.log(`Starting Labouchere with base list [${list}].`);
 
-loop: for (;;) {
-  // Determine wager size and the new list in case we win.
-  let wager    = 0;
-  let listWin  = null;
-
-  switch(list.length) {
-  case 0:
-    // Finished a list. Loop?
-    if (config.loop.value) {
-      list = baseList;
-      continue loop;
-    } else {
-      break loop;
-    }
-  case 1:
-    wager   = list[0];
-    listWin = [];
-    break;
-  default:
-    wager   = list[0] + list[list.length-1];
-    listWin = list.slice(1,-1);
-    break;
-  }
+for (;;) {
+  // sum first item with last item if it exists
+  const wager = list[0] + (list.length > 1 ? list[list.length-1] : 0)
 
   // make the bet and wait for the result
   const { multiplier } = await this.bet(wager, config.target.value);
@@ -55,7 +35,16 @@ loop: for (;;) {
     list.push(wager);
     this.log(`Bet ${wager} satoshis. Lost. New list: [${list}].`);
   } else { // win
-    list = listWin;
-    this.log(`Bet ${wager} satoshis. Won. New list [${list}]`);
+    list = list.slice(1, -1);
+    const cleared = list.length === 0;
+    if (cleared && config.loop.value) {
+      list = baseList.slice();
+      this.log(`Bet ${wager} satoshis. Won. Reset list [${list}]`);
+    } else if (cleared && !config.loop.value) {
+      this.log(`Bet ${wager} satoshis. Won. Script finished.`);
+      break;
+    } else {
+      this.log(`Bet ${wager} satoshis. Won. New list [${list}]`);
+    }
   }
 }
