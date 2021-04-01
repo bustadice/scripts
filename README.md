@@ -204,10 +204,11 @@ var config = {
     type: "combobox",
     // optional: true,
     value: "red",
+    label: "Favorite color",
     options: {
-      red: { value: "red", label: "Red" },
-      yellow: { value: "yellow", label: "Yellow" },
-      blue: { value: "blue", label: "Blue" }
+      red: { label: "Red" },
+      yellow: { label: "Yellow" },
+      blue: { label: "Blue" }
     }
   }
 };
@@ -218,7 +219,8 @@ log(config.color.value);
 If configured to `optional: true`, then a "None" option will be added and,
 when selected, `config.color.value` will be `undefined`.
 
-Otherwise, be sure to provide an initial `value` setting.
+Otherwise, be sure to provide an initial `value` setting that points to one
+of the keys in your `options` mapping.
 
 #### `text`
 A simple text field that provides a string to the script.
