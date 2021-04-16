@@ -195,6 +195,33 @@ var config = {
 
 `config.loss.value` will be a string and either `base` or `increase`. If `increase` was chosen, the multiplier's value is accessible at `config.loss.options.increase.value`.
 
+#### `combobox`
+A dropdown box that lets you choose one of several options.
+
+```javascript
+var config = {
+  color: {
+    type: "combobox",
+    // optional: true,
+    value: "red",
+    label: "Favorite color",
+    options: {
+      red: { label: "Red" },
+      yellow: { label: "Yellow" },
+      blue: { label: "Blue" }
+    }
+  }
+};
+
+log(config.color.value);
+```
+
+If configured to `optional: true`, then a "None" option will be added and,
+when selected, `config.color.value` will be `undefined`.
+
+Otherwise, be sure to provide an initial `value` setting that points to one
+of the keys in your `options` mapping.
+
 #### `text`
 A simple text field that provides a string to the script.
 
